@@ -11,9 +11,9 @@ import type { MissionPlan, MissionStatus } from './types';
 
 const app = express();
 app.disable('x-powered-by');
-app.use(helmet());
+app.use(helmet() as any);
 const allowedOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',').map(s=>s.trim());
-app.use(cors({ origin(origin, callback) { if (!origin || allowedOrigins.includes(origin)) callback(null,true); else callback(new Error('Origin not allowed by CORS')); } }));
+app.use(cors({ origin(origin, callback) { if (!origin || allowedOrigins.includes(origin)) callback(null,true); else callback(new Error('Origin not allowed by CORS')); } }) as any);
 app.use(express.json({limit:'100kb'}));
 const aiLimiter = rateLimit({windowMs:60_000, limit:8, standardHeaders:true, legacyHeaders:false, message:{error:'Too many AI requests. Please wait a minute and try again.'}});
 const upload = multer({
@@ -31,7 +31,7 @@ const statusSchema = z.object({status:z.enum(['saved','in_progress','completed',
 const evidenceSchema = z.object({afterPhotoName:z.string().max(160).optional().default(''),reflection:z.string().max(1000).optional().default('')});
 app.get('/api/health', (_req,res)=>res.json({ok:true,service:'outsidefix-api',aiConfigured:Boolean(process.env.GEMMA_API_URL&&process.env.GEMMA_API_KEY&&process.env.GEMMA_MODEL),databaseMode:process.env.MONGODB_URI?'mongodb-configured':'memory-demo'}));
 
-app.post('/api/missions/analyze', aiLimiter, upload.single('image'), async (req,res,next)=>{
+app.post('/api/missions/analyze', aiLimiter as any, upload.single('image') as any, async (req: Request, res: Response, next: NextFunction)=>{
   try {
     if (!req.file) return res.status(400).json({error:'Choose a valid JPEG, PNG, or WebP image up to the configured size.'});
     const description = typeof req.body.description === 'string' ? req.body.description.slice(0,500) : '';
