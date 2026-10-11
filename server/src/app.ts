@@ -74,11 +74,11 @@ app.post('/api/missions/:id/evidence', async (req,res,next)=>{
 });
 app.delete('/api/missions/:id', async (req,res,next)=>{try{const removed=await removeMission(req.params.id);return removed?res.json({ok:true}):res.status(404).json({error:'Mission not found.'});}catch(e){return next(e);}});
 
-app.use((err: unknown,_req:Request,res:Response,_next:NextFunction)=>{
-  if(err instanceof multer.MulterError) return res.status(err.code==='LIMIT_FILE_SIZE'?413:400).json({error:err.code==='LIMIT_FILE_SIZE'?'Image is too large.':'Upload was rejected.'});
-  if(err instanceof IntegrationError) return res.status(err.statusCode).json({error:err.message});
-  if(err instanceof Error && err.message==='Not allowed by CORS') return res.status(403).json({error:'Origin not allowed.'});
-  console.error('Request failed:',err instanceof Error?err.message:'unknown error');
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  if (err instanceof multer.MulterError) return res.status(err.code==='LIMIT_FILE_SIZE'?413:400).json({error:err.code==='LIMIT_FILE_SIZE'?'Image is too large.':'Upload was rejected.'});
+  if (err instanceof IntegrationError) return res.status(err.statusCode).json({error:err.message});
+  if (err instanceof Error && err.message==='Not allowed by CORS') return res.status(403).json({error:'Origin not allowed.'});
+  console.error('Request failed:', err instanceof Error ? err.message : err);
   return res.status(500).json({error:'Unexpected server error. Please try again.'});
 });
 export default app;

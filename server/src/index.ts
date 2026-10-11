@@ -14,7 +14,7 @@ const port=Number(process.env.PORT||5000);
 async function start(){
   if(process.env.MONGODB_URI){
     try {
-      await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+      await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 5000 } as mongoose.ConnectOptions);
       setMongoEnabled(true);
       console.log('MongoDB Atlas connection established.');
     } catch (error) {
