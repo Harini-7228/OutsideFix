@@ -90,7 +90,3 @@ Render free-tier availability, cold starts, and provider quotas may change.
 ## Testing
 
 The test suite covers core safety policy and mission-state transitions. Run `npm test`. Automated tests do not prove that the configured remote Gemma endpoint works; verify that manually with a real request.
-
-## Contest submission materials
-
-See `SUBMISSION_DRAFT.md`, `DEMO_SCRIPT.md`, and `EVIDENCE_CHECKLIST.md`. Replace all placeholders with real URLs and screenshots, and remove any statement that does not match the final working implementation.
