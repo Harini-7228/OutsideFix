@@ -23,7 +23,7 @@ An open-weight model gives builders more flexibility to inspect deployment optio
 ## Demo
 
 - Live app: [ADD REAL DEPLOYED URL]
-- Source code: [ADD REAL REPOSITORY URL]
+- Source code: https://github.com/Harini-7228/OutsideFix
 - Screenshots: [ADD REAL SCREENSHOTS]
 
 ## What I tested
