@@ -76,6 +76,8 @@ npm run build
 
 A `render.yaml` blueprint is included. Set server environment variables in Render. Configure `CLIENT_ORIGIN` to your deployed frontend URL and `VITE_API_URL` to the deployed backend API URL. For a production deployment, set `MONGODB_URI`, Gemma variables, and a strong origin allowlist. Build and deploy both services separately if you prefer independent service configuration.
 
+The blueprint deploys two separate services: `outsidefix-api` (the backend) and `outsidefix-web` (the React frontend). Open the `outsidefix-web` URL to use the app; the API URL is for API requests and health checks. Visiting the API root returns service information rather than the frontend. Set `CLIENT_APP_URL` to the deployed web URL, `CLIENT_ORIGIN` to that same URL, and the web service's `VITE_API_URL` to the API URL followed by `/api`.
+
 Render free-tier availability, cold starts, and provider quotas may change.
 
 ## Safety and privacy

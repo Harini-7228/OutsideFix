@@ -29,6 +29,13 @@ const planSchema = z.object({
 });
 const statusSchema = z.object({status:z.enum(['saved','in_progress','completed','cancelled'])});
 const evidenceSchema = z.object({afterPhotoName:z.string().max(160).optional().default(''),reflection:z.string().max(1000).optional().default('')});
+app.get('/', (_req,res)=>res.json({
+  service:'OutsideFix API',
+  message:'The API is running. Open the OutsideFix web app to use the application.',
+  frontend:process.env.CLIENT_APP_URL || null,
+  health:'/api/health',
+  endpoints:['/api/missions','/api/missions/analyze']
+}));
 app.get('/api/health', (_req,res)=>res.json({ok:true,service:'outsidefix-api',aiConfigured:Boolean(process.env.GEMMA_API_URL&&process.env.GEMMA_API_KEY&&process.env.GEMMA_MODEL),databaseMode:process.env.MONGODB_URI?'mongodb-configured':'memory-demo'}));
 
 app.post('/api/missions/analyze', aiLimiter as any, upload.single('image') as any, async (req: Request, res: Response, next: NextFunction)=>{
